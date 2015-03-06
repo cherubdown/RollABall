@@ -3,6 +3,15 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	public float speed;
+	private int count;
+	public GUIText countText;
+	public GUIText winText;
+
+	void Start() {
+		count = 0;
+		UpdateItemCount();
+		winText.text = string.Empty;
+	}
 
     // physics calculations are applied right before this func
     void FixedUpdate()
@@ -18,7 +27,15 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if (other.gameObject.tag == "PickUp") {
 			other.gameObject.SetActive(false);
+			count++;
+			UpdateItemCount();
 		}
 	}
 
+	void UpdateItemCount() {
+		countText.text = "Count: " + count.ToString();
+		if (count >= 14) {
+			winText.text = "You Win!";
+		}
+	}
 }
